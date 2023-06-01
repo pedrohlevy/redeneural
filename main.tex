@@ -1,0 +1,220 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx}
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{float}
+\usepackage{tocloft}
+\usepackage[brazilian]{babel}
+
+\addto\captionsbrazilian{%
+  \renewcommand{\contentsname}{Sumário}%
+  \renewcommand{\figurename}{Figura}%
+}
+
+\title{\fontsize{24}{28}\selectfont Redes Neurais}
+\author{\fontsize{14}{16}\selectfont JP \\ PL \\ DB}
+\date{}
+
+\begin{document}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.5\textwidth]{logo-fatec.png}
+\end{figure}
+\begin{titlepage}
+    \centering
+    \vspace*{4cm}
+    {\LARGE\bfseries \fontsize{24}{28}\selectfont Redes Neurais - Relatório\par}
+    \vspace{0.25cm}
+    {\Large \fontsize{18}{22}\selectfont Classificação de flores\par}
+    \vfill 
+    \centering
+    \begin{tabular}{c}
+        \fontsize{14}{16}\selectfont Diego Brunetto da Silva \\
+        \fontsize{14}{16}\selectfont João Pedro Borges Baeta \\
+        \fontsize{14}{16}\selectfont Pedro Henrique Levy Fermino Ferreira
+    \end{tabular}
+    \vspace*{\fill}
+    
+    \centering
+    \begin{tabular}{l}
+        \textbf{Professor} \\
+        Alexandre Garcia de Oliveira
+    \end{tabular}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{O conceito de Redes Neurais}
+
+Uma rede neural é um sistema de computador com nós interconectados que funcionam como os neurônios do cérebro humano. Usando algoritmos, eles podem reconhecer padrões ocultos e correlações em dados brutos, agrupá-los e categorizá-los, e aprender e melhorar continuamente com o tempo. Redes neurais artificiais (ANNs) consistem em uma camada de nós com uma camada de entrada, uma ou mais camadas ocultas e uma camada de saída. Cada nó ou neurônio artificial é conectado a outro e possui peso e limite apropriados. As redes neurais dependem de dados de treinamento para aprender e melhorar sua precisão ao longo do tempo.
+
+\section {Peso e Bias}
+
+Nas redes neurais, entradas parciais são dadas aos neurônios artificiais. Cada entrada é ponderada. Os pesos representam o desempenho de uma entrada específica. Quanto maior o peso de uma entrada, maior sua influência na rede neural. O viés, por outro lado, é como uma interceptação adicionada a uma equação linear. É um parâmetro adicional em uma rede neural que ajusta a saída do neurônio, bem como a soma ponderada de suas entradas. Simplificando, Bias é uma entrada com valor "1" associado ao peso "b" de cada neurônio. Sua função é aumentar ou diminuir a entrada líquida para transladar a função de ativação no eixo.
+
+\section{Classificação de flores}
+
+Escolhemos realizar a classificação de duas flores (rosas e girassóis) por meio da implementação de um algoritmo de redes neurais, utilizando padrões naturais de ambas as flores para prever qual é a flor apenas com a inserção desses parâmetros.
+
+\section{As flores a serem classificadas}
+
+Como mencionado anteriormente, as duas flores escolhidas para realização das classificações foram as rosas e os girassóis. Adotamos os dois principais padrões naturais destas flores, que são:\\
+
+Rosas
+\begin{itemize}
+    \item Tamanho - Variam entre 5 e 10cm de diâmetro;
+    \item Cor - A característica mais predominante de uma rosa, adotamos o número 0 para essa variável;
+    \item Rótulo (Label) - Adotamos o número 0 para rosa, para identificação da rede neural.
+\end{itemize}
+
+Girassóis
+\begin{itemize}
+    \item Tamanho - Variam entre 20 e 30cm de diâmetro;
+    \item Cor - Os girassóis não possuem como característica mais importante sua cor, portanto adotamos o número 1 para essa variável;
+    \item Rótulo (Label) - Adotamos o número 1 para girassol, para identificação da rede neural.
+\end{itemize}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{o-girassol-e-a-rosa-14280197-140920181943.jpg}
+  \caption{Rosa e girassol}
+\end{figure}
+
+\section{Função do Erro}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1.1\textwidth]{funcao_erro.png}
+  \caption{Função Erro}
+\end{figure}
+
+No código a função que calcula o erro foi inserida dentro do loop que treina a rede neural por meio da diferença entre o rótulo (label) esperado e a predição, sendo armazenado na variável erro\_total para cada padrão de flor encontrado no loop.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{funcao_erro2.png}
+  \caption{Média Função Erro}
+\end{figure}
+
+Ao final de cada época, o loop divide o erro total pelo número de padrões de flor, assim obtendo o erro médio da época, atualizando os pesos da rede neural para refinar o treinamento.
+
+\section{Sigmóide}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{sigmoide.png}
+  \caption{Função de ativação sigmóide e derivada da função sigmoide}
+\end{figure}
+
+\section{Hiperparâmetros}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{hiperparametros.png}
+  \caption{Taxa de aprendizado e épocas}
+\end{figure}
+
+\textbf{Taxa de aprendizado}\\
+A taxa de aprendizado (learning rate) é um hiperparâmetro que determina o ajuste dos pesos dos neurônios de um algoritmo de rede neural.\\
+Esse hiperparâmetro deve ser ajustado de maneira correta, pois um valor ou muito alto ou muito baixo pode comprometer o desempenho e a acurácia da predição a ser realizada pelo algorítmo.\\
+O valor 0.1 de taxa de aprendizado foi adotado por ser considerado um valor moderado e comumente utilizado em algoritmos de redes neurais. Isso significa que: a cada atualização nos pesos, a taxa de aprendizado vai ajustar cada um dos pesos em 10\%.\\
+\\
+\textbf{Épocas}\\
+O hiperparâmetro épocas (epochs) é o número de vezes que a rede neural irá testar os padrões apresentados.\\
+Foi adotado o valor de 1500 épocas no código apresentado, o que significa que os padrões apresentados serão lidos 1500 vezes, mudando os pesos conforme o erro calculado em cada amostra realizada no treinamento da rede neural.\\
+O número ideal de épocas visa velocidade e confiabilidade, tentando minimizar os erros e atingir o valor erro mais próximo de zero.\\
+\textit{Caso tenha interesse, procure pelos gráficos do gradiente descendente (Item 9, Resultados) com 1500, 500 e 100 épocas, e compare com o erro médio.}
+
+\section{Gradientes}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{gradiente.png}
+  \caption{Calculo dos gradientes}
+\end{figure}
+
+A função da rede neural é dada por:
+
+\begin{equation}
+w_1 \cdot \text{cor} + w_2 \cdot \text{diâmetro} + b \rightarrow \textit{chamaremos de weighted\_sum}
+\end{equation}\\
+O output que é a classificação das flores será a aplicação do sigmoid a função weighted\_sum, após isso será possível encontrar o vetor gradiente para calcular as derivadas parciais: 
+
+\begin{equation}
+\text{output} = \left(1 + \text{sigmoide}\left(-\left(w_1 \cdot \text{cor} + w_2 \cdot \text{diâmetro} + b\right)\right)\right)
+\end{equation}\\
+O vetor gradiente será dado pela derivada parcial de w1, w2 e b, abaixo as derivadas parciais:
+
+\begin{equation}
+\frac{\partial F}{\partial w_1} = (1 + \text{sigmoide}(-(w_1 \cdot \text{cor} + w_2 \cdot \text{diameter} + b))) \rightarrow \text{cor} \cdot \text{sigmoide}(-(w_1 \cdot \text{cor} + w_2 \cdot \text{diametro} + b))
+\end{equation}
+
+\begin{equation}
+\frac{\partial F}{\partial w_2} = (1 + \text{sigmoide}(-(w_1 \cdot \text{cor} + w_2 \cdot \text{diâmetro} + b))) \rightarrow \text{diâmetro} \cdot \text{sigmoide} (-(w_1 \cdot \text{cor} + w_2 \cdot \text{diâmetro} + b))
+\end{equation}
+
+\begin{equation}
+\frac{\partial F}{\partial b} = (1 + \exp(-(w_1 \cdot \text{cor} + w_2 \cdot \text{diâmetro} + b))) \rightarrow \text{sigmoide} (-(w_1 \cdot \text{cor} + w_2 \cdot \text{diâmetro} + b))
+\end{equation}
+
+\begin{equation}
+\text{GradF}(w_1, w_2, b) = \left[ \begin{array}{c}
+\text{cor} \cdot \text{sigmoide}(-(w_1 \cdot \text{cor} + w_2 \cdot \text{diâmetro} + b)), \\
+\text{diâmetro} \cdot \text{sigmoide}(-(w_1 \cdot \text{cor} + w_2 \cdot \text{diâmetro} + b)), \\
+\text{sigmoide}(-(w_1 \cdot \text{cor} + w_2 \cdot \text{diâmetro} + b))
+\end{array} \right]
+\end{equation}
+
+\section{Resultados}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{resultado.png}
+  \caption{Output da classificação das flores para 1500 épocas}
+\end{figure}
+
+Como mostrado na figura acima, a classificação das rosas se aproxima de 0 e a classificação dos girassóis se aproxima de 1, isso demonstra a função sigmóide sendo executada, pois o intervalo de saída da classificação se encontra no intervalo [0,1], ou seja, caso a saída seja menor que 0.5, podemos considerar que a flor é uma rosa, e maior que 0.5 no caso dos girassóis.\\
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{resultado2.png}
+  \caption{Output da classificação das flores para 500 épocas}
+\end{figure}
+
+Nesse caso, percebe-se que a precisão diminuiu devido a diminuição no número de épocas, ficando mais perto do limite da divisão de classificação.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{grafico_classificacao.png}
+  \caption{Gráfico da classificação de flores}
+\end{figure}
+
+Esse gráfico demonstra o limite entre a classificação da rosa e do girassol, onde o limite se estabelece por volta do ponto 0.5 no eixo y (cor), que é considerado a principal característica para realizar a classificação.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{grafico_100.png}
+  \caption{Gráfico do gradiente descendente para 100 épocas}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{grafico_500.png}
+  \caption{Gráfico do gradiente descendente para 500 épocas}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{grafico_1500.png}
+  \caption{Gráfico do gradiente descendente para 1500 épocas}
+\end{figure}
+
+Os três gráficos demonstram o gradiente descendente para três valores de épocas diferentes (100, 500 e 1500), mostrando o erro médio ao fim da quantidade de épocas. O valor de 1500 épocas apresenta uma margem de erro muito próxima de zero, mostrando um comportamento similar a uma reta ao fim das 1500 épocas, indicando estabilidade.
+
+\section{Links úteis}
+
+GitHub com todos os arquivos - https://github.com/pedrohlevy/redeneural\\
+LinkedIn Diego Brunetto da Silva - https://www.linkedin.com/in/diego-brunetto-b892b1202/\\
+LinkedIn João Pedro Borges Baeta - https://www.linkedin.com/in/joaopedrobaeta/\\
+LinkedIn Pedro Henrique Levy Fermino Ferreira - https://www.linkedin.com/in/pedrohlevy/\\
+
+\end{document}
